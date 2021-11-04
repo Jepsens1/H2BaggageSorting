@@ -8,12 +8,11 @@ namespace H2BaggageSorting
         {
             SortHandler sortHandler = new SortHandler();
             Thread CheckinThread = new Thread(sortHandler.CheckInStart);
-            Thread SortHandlerThread = new Thread(sortHandler.SortLuggage);
-            Thread TerminalThread = new Thread(sortHandler.TerminalStart);
-
+            //Thread SortHandlerThread = new Thread(sortHandler.SortLuggage);
+            //Thread TerminalThread = new Thread(sortHandler.TerminalStart);
             CheckinThread.Start();
-            SortHandlerThread.Start();
-            TerminalThread.Start();
+            //SortHandlerThread.Start();
+            //TerminalThread.Start();
         }
     }
 }

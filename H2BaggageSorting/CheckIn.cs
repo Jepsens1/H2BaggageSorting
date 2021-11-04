@@ -5,63 +5,84 @@ using System.Threading;
 
 namespace H2BaggageSorting
 {
-    public enum Destination
-    {
-        London,
-        Copenhaegen,
-        Bayern,
-        Rome,
-        Paris
-    }
     class CheckIn
     {
         public int PassageNumber { get; set; }
-        
         public int BaggageNumber { get; set; }
-
-        public Destination destination { get; set; }
         public DateTime CheckInTime { get; set; }
-        public DateTime CheckOutTime { get; set; }
-
-        public CheckIn(int _PassageNumber, int _BaggageNumber, DateTime _Checkin, DateTime _Checkout)
-        {
-            PassageNumber = _PassageNumber;
-            BaggageNumber = _BaggageNumber;
-            CheckInTime = _Checkin;
-            CheckOutTime = _Checkout;
-        }
         Random r = new Random(Guid.NewGuid().GetHashCode());
-        public void StartCheckIn(DateTime checkintime, DateTime checkouttime, int baggageNumber, byte[] terminalBuffer)
+        int number;
+        public static int lugcount;
+        public static Luggage[] lugbuffer = new Luggage[25];
+        public CheckIn(DateTime _Checkin)
+        {
+            PassageNumber = GeneratePassaggeNumber();
+            BaggageNumber = GenerateBaggageNumber();
+            CheckInTime = _Checkin;
+        }
+        int GenerateBaggageNumber()
+        {
+            return r.Next(1, 1000);
+        }
+        int GeneratePassaggeNumber()
+        {
+            return r.Next(1100, 10000);
+        }
+        public void StartCheckIn(object locke, Destination destination)
         {
             while (true)
             {
                 try
                 {
-                    Monitor.Enter(terminalBuffer);
-                    if (terminalBuffer.Length == 15)
+                    Monitor.Enter(locke);
+                    if (lugcount == 25 || SortHandler.sortcount == 100)
                     {
-                        Monitor.Wait(terminalBuffer);
-                        Console.WriteLine("Terminal luggage is full");
+                        Monitor.Wait(locke);
                     }
-                    switch (destination)
+                    for (int i = 0; i < lugbuffer.Length; i++)
                     {
-                        case Destination.London:
-                            break;
-                        case Destination.Copenhaegen:
-                            break;
-                        case Destination.Bayern:
-                            break;
-                        case Destination.Rome:
-                            break;
-                        case Destination.Paris:
-                            break;
-                        default:
-                            break;
+                        if (lugbuffer[i] == null)
+                        {
+                            switch (destination)
+                            {
+                                case Destination.London:
+                                    lugbuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
+                                    SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
+                                    lugcount++;
+                                    SortHandler.sortcount++;
+                                    number++;
+                                    break;
+                                case Destination.Bayern:
+                                    lugbuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
+                                    SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
+                                    lugcount++;
+                                    SortHandler.sortcount++;
+                                    number++;
+                                    break;
+                                case Destination.Rome:
+                                    lugbuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
+                                    SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
+                                    lugcount++;
+                                    SortHandler.sortcount++;
+                                    number++;
+                                    break;
+                                case Destination.Paris:
+                                    lugbuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
+                                    SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
+                                    lugcount++;
+                                    SortHandler.sortcount++;
+                                    number++;
+                                    break;
+                            }
+                        }
                     }
+                   
+                    Monitor.PulseAll(locke);
+                    Thread.Sleep(5000);
                 }
                 finally
                 {
-
+                    Monitor.Exit(locke);
                 }
             }
         }
