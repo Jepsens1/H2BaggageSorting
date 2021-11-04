@@ -10,10 +10,13 @@ namespace H2BaggageSorting
 
         public DateTime Timestamp { get; set; }
 
-        public Luggage(int _baggage, DateTime _time, Destination destination)
+        public Destination Destination { get; set; }
+
+        public Luggage(int _baggage, DateTime _time, Destination _destination)
         {
             BaggageNumber = _baggage;
             Timestamp = _time;
+            Destination = _destination;
         }
     }
 }

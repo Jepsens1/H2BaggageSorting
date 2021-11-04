@@ -11,7 +11,6 @@ namespace H2BaggageSorting
         public int BaggageNumber { get; set; }
         public DateTime CheckInTime { get; set; }
         Random r = new Random(Guid.NewGuid().GetHashCode());
-        int number;
         public static int lugggagecount;
         public static Luggage[] luggagebuffer = new Luggage[25];
         public CheckIn(DateTime _Checkin)
@@ -45,35 +44,23 @@ namespace H2BaggageSorting
                             int destination = GenerateBaggageNumber();
                             if (destination <= 25)
                             {
-                                luggagebuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
-                                SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
+                                luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
                                 lugggagecount++;
-                                SortHandler.sortcount++;
-                                number++;
                             }
                             else if (destination > 25 && destination <= 50)
                             {
-                                luggagebuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
-                                SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
+                                luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
                                 lugggagecount++;
-                                SortHandler.sortcount++;
-                                number++;
                             }
                             else if (destination > 50 && destination <= 75)
                             {
-                                luggagebuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
-                                SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
+                                luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
                                 lugggagecount++;
-                                SortHandler.sortcount++;
-                                number++;
                             }
                             else if (destination > 75 && destination <= 100)
                             {
-                                luggagebuffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
-                                SortHandler.buffer[number] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
+                                luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
                                 lugggagecount++;
-                                SortHandler.sortcount++;
-                                number++;
                             }
                         }
                     }

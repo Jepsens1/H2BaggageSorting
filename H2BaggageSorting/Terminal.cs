@@ -12,11 +12,10 @@ namespace H2BaggageSorting
         public int BaggageNumber { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public Luggage[] termbuffer = new Luggage[50];
-        public static int TerminalCount;
+        public Luggage[] termbuffer = new Luggage[25];
+        public static int TerminalCount = 0;
         public void StartTerminal()
         {
-            
             while (true)
             {
                 try
@@ -28,9 +27,36 @@ namespace H2BaggageSorting
                     }
                     for (int i = 0; i < SortHandler.buffer.Length; i++)
                     {
-                       
+                        if (SortHandler.buffer[i] != null)
+                        {
+                            switch (SortHandler.buffer[i].Destination)
+                            {
+                                case Destination.London:
+                                    termbuffer[i] = SortHandler.buffer[i];
+                                    SortHandler.buffer[i] = null;
+                                    TerminalCount++;
+                                    break;
+                                case Destination.Bayern:
+                                    termbuffer[i] = SortHandler.buffer[i];
+                                    SortHandler.buffer[i] = null;
+                                    TerminalCount++;
+                                    break;
+                                case Destination.Rome:
+                                    termbuffer[i] = SortHandler.buffer[i];
+                                    SortHandler.buffer[i] = null;
+                                    TerminalCount++;
+                                    break;
+                                case Destination.Paris:
+                                    termbuffer[i] = SortHandler.buffer[i];
+                                    SortHandler.buffer[i] = null;
+                                    TerminalCount++;
+                                    break;
+                            }
+                        }  
                     }
-                    
+                    Monitor.PulseAll(SortHandler._lock);
+                    Thread.Sleep(5000);
+
                 }
                 finally
                 {
