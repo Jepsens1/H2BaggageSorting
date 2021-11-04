@@ -35,21 +35,25 @@ namespace H2BaggageSorting
                                     termbuffer[i] = SortHandler.buffer[i];
                                     SortHandler.buffer[i] = null;
                                     TerminalCount++;
+                                    Console.WriteLine("Flying to London");
                                     break;
                                 case Destination.Bayern:
                                     termbuffer[i] = SortHandler.buffer[i];
                                     SortHandler.buffer[i] = null;
                                     TerminalCount++;
+                                    Console.WriteLine("Flying to Bayern");
                                     break;
                                 case Destination.Rome:
                                     termbuffer[i] = SortHandler.buffer[i];
                                     SortHandler.buffer[i] = null;
                                     TerminalCount++;
+                                    Console.WriteLine("Flying to Rome");
                                     break;
                                 case Destination.Paris:
                                     termbuffer[i] = SortHandler.buffer[i];
                                     SortHandler.buffer[i] = null;
                                     TerminalCount++;
+                                    Console.WriteLine("Flying to Paris");
                                     break;
                             }
                         }  

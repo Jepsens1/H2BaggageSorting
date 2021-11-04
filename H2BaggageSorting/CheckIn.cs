@@ -41,26 +41,30 @@ namespace H2BaggageSorting
                     {
                         if (luggagebuffer[i] == null)
                         {
-                            int destination = GenerateBaggageNumber();
-                            if (destination <= 25)
+                            BaggageNumber = GenerateBaggageNumber();
+                            if (BaggageNumber <= 25)
                             {
                                 luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
                                 lugggagecount++;
+                                //Console.WriteLine("Added to london");
                             }
-                            else if (destination > 25 && destination <= 50)
+                            else if (BaggageNumber > 25 && BaggageNumber <= 50)
                             {
                                 luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
                                 lugggagecount++;
+                                //Console.WriteLine("Added to Bayern");
                             }
-                            else if (destination > 50 && destination <= 75)
+                            else if (BaggageNumber > 50 && BaggageNumber <= 75)
                             {
                                 luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
                                 lugggagecount++;
+                                //Console.WriteLine("Added to Rome");
                             }
-                            else if (destination > 75 && destination <= 100)
+                            else if (BaggageNumber > 75 && BaggageNumber <= 100)
                             {
                                 luggagebuffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
                                 lugggagecount++;
+                                //Console.WriteLine("Added to Paris");
                             }
                         }
                     }

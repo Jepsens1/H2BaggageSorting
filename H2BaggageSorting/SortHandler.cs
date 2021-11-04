@@ -22,9 +22,6 @@ namespace H2BaggageSorting
         public static Luggage[] buffer = new Luggage[100];
 
         Terminal terminal1 = new Terminal();
-        Terminal terminal2 = new Terminal();
-        Terminal terminal3 = new Terminal();
-        Terminal terminal4 = new Terminal();
         public void CheckInStart()
         {
             CheckIn checkIn = new CheckIn(DateTime.Now);
@@ -47,28 +44,36 @@ namespace H2BaggageSorting
                         {
                             if (CheckIn.luggagebuffer[i].BaggageNumber <= 25)
                             {
+                                CheckIn.luggagebuffer[i] = null;
                                 buffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.London);
                                 sortcount++;
+                                Console.WriteLine("Sorted and added to Terminal 1");
                             }
                             else if (CheckIn.luggagebuffer[i].BaggageNumber > 25 && CheckIn.luggagebuffer[i].BaggageNumber <= 50)
                             {
+                                CheckIn.luggagebuffer[i] = null;
                                 buffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Bayern);
                                 sortcount++;
+                                Console.WriteLine("Sorted and added to Terminal 2");
                             }
                             else if (CheckIn.luggagebuffer[i].BaggageNumber > 50 && CheckIn.luggagebuffer[i].BaggageNumber <= 75)
                             {
+                                CheckIn.luggagebuffer[i] = null;
                                 buffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Rome);
                                 sortcount++;
+                                Console.WriteLine("Sorted and added to Terminal 3");
                             }
                             else if (CheckIn.luggagebuffer[i].BaggageNumber > 75 && CheckIn.luggagebuffer[i].BaggageNumber <= 100)
                             {
+                                CheckIn.luggagebuffer[i] = null;
                                 buffer[i] = new Luggage(BaggageNumber, CheckInTime, Destination.Paris);
                                 sortcount++;
+                                Console.WriteLine("Sorted and added to Terminal 4");
                             }
                         }
                     }
                     Monitor.PulseAll(_lock);
-                    Thread.Sleep(5000);
+                    Thread.Sleep(1000);
                 }
                 finally
                 {
@@ -78,7 +83,7 @@ namespace H2BaggageSorting
         }
         public void StartTerminal()
         {
-
+            terminal1.StartTerminal();
         }
     }
 }
