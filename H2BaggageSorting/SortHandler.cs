@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace H2BaggageSorting
 {
@@ -17,25 +18,34 @@ namespace H2BaggageSorting
         public int BaggageNumber { get; set; }
         public DateTime CheckInTime { get; set; }
         public DateTime CheckOutTime { get; set; }
+        public static object _lock = new object();
+        public static Luggage[] buffer = new Luggage[100];
 
         Random r = new Random(Guid.NewGuid().GetHashCode());
-        object _lock = new object();
-        public static Luggage[] buffer = new Luggage[100];
 
         public void CheckInStart()
         {
-            CheckIn checkIn = new CheckIn(CheckInTime);
-            checkIn.StartCheckIn(_lock,(Destination)GenerateRandomDestination());
+            CheckIn checkIn = new CheckIn(DateTime.Now);
+            checkIn.StartCheckIn();
         }
         public void SortLuggage()
         {
+            while (true)
+            {
+                try
+                {
+                    Monitor.Enter(_lock);
+                }
+                finally
+                {
+
+                }
+            }
+
         }
         public void TerminalStart()
         {
         }
-        public int GenerateRandomDestination()
-        {
-            return r.Next(0, 3);
-        }
+
     }
 }

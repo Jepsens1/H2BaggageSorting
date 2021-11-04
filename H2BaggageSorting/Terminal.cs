@@ -13,35 +13,28 @@ namespace H2BaggageSorting
         public DateTime TimeStamp { get; set; }
 
         public Luggage[] termbuffer = new Luggage[50];
-        public void StartTerminal(object locke, Luggage[] buffer, Destination destination)
+        public static int TerminalCount;
+        public void StartTerminal()
         {
             
             while (true)
             {
                 try
                 {
-                    Monitor.Enter(locke);
-                    if (termbuffer.Length == 50)
+                    Monitor.Enter(SortHandler._lock);
+                    if (TerminalCount == 25)
                     {
-                        Monitor.Wait(locke);
+                        Monitor.Wait(SortHandler._lock);
                     }
-                    switch (destination)
+                    for (int i = 0; i < SortHandler.buffer.Length; i++)
                     {
-                        case Destination.London:
-                            break;
-                        case Destination.Bayern:
-                            break;
-                        case Destination.Rome:
-                            break;
-                        case Destination.Paris:
-                            break;
-                        default:
-                            break;
+                       
                     }
+                    
                 }
                 finally
                 {
-                    Monitor.Exit(locke);
+                    Monitor.Exit(SortHandler._lock);
                 }
             }
         }
